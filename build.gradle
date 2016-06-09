@@ -1,0 +1,54 @@
+group 'tiddle'
+version '2.0'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// Declares binary plugin and its required JavaFX classpath
+//apply from: "http://dl.bintray.com/content/shemnon/javafx-gradle/8.1.1/javafx.plugin"
+
+// Configures plugin
+//javafx {
+//    // Points to JDK and its JavaFX libraries, also declares target runtime JDK
+//    javaRuntime = '/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk'
+//
+//    // Application name and ID presented by target OS
+//    appID 'Tiddle'
+//    appName 'Tiddle'
+//
+//    // Main class of application
+//    mainClass 'tiddle.javafx.Main'
+//
+//    // JVM arguments, system properties, application command line arguments
+//    jvmArgs = ['-XX:+AggressiveOpts', '-XX:CompileThreshold=1']
+//    systemProperties = ['prism.disableRegionCaching':'true']
+//    arguments = ['-l', '--fast']
+//}
+
+dependencies {
+    compile "org.apache.lucene:lucene-core:2.4.1"
+    compile "net.sf.saxon:saxon-dom:8.7"
+    compile "net.sf.saxon:saxon-xpath:8.7"
+    compile "xmlunit:xmlunit:1.2"
+    compile "log4j:log4j:1.2.14"
+    compile "com.airhacks:afterburner.fx:1.6.0"
+    compile "com.github.tulskiy:jkeymaster:1.2"
+
+    testCompile "junit:junit:4.4"
+}
+
+String getProjectProperty(String propertyName) {
+    project.hasProperty(propertyName) ? project.property(propertyName) : null
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.HTMLEditor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.Pane?>
+<VBox fx:controller="tiddle.javafx.TiddlePresenter" fx:id="mainPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+    <BorderPane fx:id="textSearchPane">
+        <left>
+            <Label fx:id="labelLogo"/>
+        </left>
+        <center>
+            <TextField fx:id="textSearchBox"/>
+        </center>
+    </BorderPane>
+    <BorderPane fx:id="contentPane">
+        <center>
+            <SplitPane fx:id="splitPane" dividerPositions="0.4">
+                <BorderPane fx:id="listViewResultsParentPane">
+                    <center>
+                        <ListView fx:id="listViewResults"/>
+                    </center>
+                </BorderPane>
+                <BorderPane fx:id="resultDetailsPane">
+                    <top>
+                        <Label fx:id="textTitle"/>
+                    </top>
+                    <center>
+                        <AnchorPane>
+                            <Pane fx:id="whiteSpaceCover" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"/>
+                            <HTMLEditor fx:id="htmlResultDetails" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"/>
+                        </AnchorPane>
+                    </center>
+                    <bottom>
+                        <Label fx:id="textTags"/>
+                    </bottom>
+                </BorderPane>
+            </SplitPane>
+        </center>
+    </BorderPane>
+</VBox>

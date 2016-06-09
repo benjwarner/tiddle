@@ -1,0 +1,23 @@
+body {
+    font-size: 10pt;
+}
+
+body, p, div, h1, h2, h3, h4 {
+    background-color: #ececec;
+    color: black;
+    font-family: Arial;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+    color: #1b4553;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4 {
+    font-family: Tahoma;
+}
