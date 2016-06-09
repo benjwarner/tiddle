@@ -1,5 +1,6 @@
 package tiddle.javafx;
 
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 /**
@@ -23,7 +24,8 @@ public class WindowService {
     }
 
     public void exit() {
-        stage.hide();
+        Platform.exit();
+        System.exit(0);
     }
 
     public void hide() {

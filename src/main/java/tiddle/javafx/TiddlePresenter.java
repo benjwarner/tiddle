@@ -129,12 +129,20 @@ public class TiddlePresenter implements Initializable {
                     listViewResults.requestFocus();
                     listViewResults.getSelectionModel().selectNext();
 
-                    //Enter
                 } else if (e.getCode() == KeyCode.ENTER) {
                     //TODO possibly launch browser
 
                 } else if (e.getCode() == KeyCode.ESCAPE) {
                     escapeKeyPressed();
+
+                } else if (e.isControlDown() && !e.isShiftDown()) {
+                    if (e.getCode() == KeyCode.R) {
+                        wikiSearchService = wikiSearchService.rebuild();
+
+                    } else if (e.getCode() == KeyCode.Q) {
+                        windowService.exit();
+                    }
+
                 } else if (e.isControlDown() && e.isShiftDown()) {
                     if (e.getCode() == KeyCode.D) {
                         debugGui(mainPane);
