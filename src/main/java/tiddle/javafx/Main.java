@@ -2,8 +2,6 @@ package tiddle.javafx;
 
 import com.airhacks.afterburner.injection.Injector;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -28,7 +26,7 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         final TiddleView mainView = new TiddleView();
-        final Scene scene = new Scene( mainView.getView() );
+        final Scene scene = new Scene(mainView.getView());
         scene.getStylesheets().add("tiddle/javafx/tiddle.css");
         scene.setFill(Color.TRANSPARENT);
 
@@ -38,7 +36,7 @@ public class Main extends Application {
         primaryStage.show();
 
         primaryStage.iconifiedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue) {
+            if (!newValue) {
                 primaryStage.requestFocus();
             }
         });

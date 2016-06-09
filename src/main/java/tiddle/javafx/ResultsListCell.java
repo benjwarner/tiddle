@@ -1,12 +1,10 @@
 package tiddle.javafx;
 
 import javafx.scene.control.Control;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
-import javafx.scene.text.Text;
 
 /**
  * User: ben
@@ -23,7 +21,7 @@ public class ResultsListCell extends ListCell<ResultsListItem> {
     @Override
     public void updateItem(final ResultsListItem item, final boolean empty) {
         super.updateItem(item, empty);
-        if(empty || item == null){
+        if (empty || item == null) {
             setText("");
         } else {
             setText(item.title);

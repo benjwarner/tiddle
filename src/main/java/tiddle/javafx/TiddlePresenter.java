@@ -2,6 +2,7 @@ package tiddle.javafx;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -148,7 +149,7 @@ public class TiddlePresenter implements Initializable {
                 if (newValue != null) {
                     final String content = newValue.htmlContent;
                     textTitle.setText(newValue.title);
-                    if(newValue.tags != null && newValue.tags.length() > 0){
+                    if (newValue.tags != null && newValue.tags.length() > 0) {
                         textTags.setText("Tags: " + String.join(" ", newValue.tags));
                     } else {
                         textTags.setText("");
@@ -211,9 +212,7 @@ public class TiddlePresenter implements Initializable {
                 }
             });
 
-            webView.setOnDragDropped((e) -> {
-                e.consume();
-            });
+            webView.setOnDragDropped(Event::consume);
 
 
             whiteSpaceCover.toFront();
@@ -225,12 +224,10 @@ public class TiddlePresenter implements Initializable {
 
     private void installDebugClickEventHandlerRecursivelyOnNode(final Node node) {
         System.out.println("Installing mouseClicked event handler on node: " + node);
-        node.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-            System.out.println(node.getClass().getSimpleName()
-                    + " id:" + node.getId()
-                    + " styleClass:" + node.getStyleClass()
-                    + " style:" + node.getStyle());
-        });
+        node.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> System.out.println(node.getClass().getSimpleName()
+                + " id:" + node.getId()
+                + " styleClass:" + node.getStyleClass()
+                + " style:" + node.getStyle()));
         if (node instanceof Parent) {
             final Parent parent = (Parent) node;
             parent.getChildrenUnmodifiable().forEach(this::installDebugClickEventHandlerRecursivelyOnNode);
@@ -249,9 +246,7 @@ public class TiddlePresenter implements Initializable {
                 + " style:" + node.getStyle());
         if (node instanceof Parent) {
             final Parent parent = (Parent) node;
-            parent.getChildrenUnmodifiable().forEach((child) -> {
-                debugGui(child, currentIndentLevel + "    ");
-            });
+            parent.getChildrenUnmodifiable().forEach((child) -> debugGui(child, currentIndentLevel + "    "));
         }
     }
 

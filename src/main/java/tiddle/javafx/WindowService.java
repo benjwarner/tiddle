@@ -1,6 +1,5 @@
 package tiddle.javafx;
 
-import javafx.application.Platform;
 import javafx.stage.Stage;
 
 /**
@@ -15,11 +14,11 @@ public class WindowService {
         this.stage = stage;
     }
 
-    public void setWidth(final double width){
+    public void setWidth(final double width) {
         stage.setWidth(width);
     }
 
-    public void setHeight(final double height){
+    public void setHeight(final double height) {
         stage.setHeight(height);
     }
 

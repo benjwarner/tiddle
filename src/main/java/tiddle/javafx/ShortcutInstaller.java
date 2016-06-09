@@ -19,14 +19,12 @@ public class ShortcutInstaller {
 
     public static void install(final WindowService windowService, final Control componentToFocus) {
         Provider provider = Provider.getCurrentProvider(false);
-        final HotKeyListener hotKeyListener = hotKey -> {
-            Platform.runLater(() -> {
-                windowService.restore();
-                if (componentToFocus != null) {
-                    componentToFocus.requestFocus();
-                }
-            });
-        };
+        final HotKeyListener hotKeyListener = hotKey -> Platform.runLater(() -> {
+            windowService.restore();
+            if (componentToFocus != null) {
+                componentToFocus.requestFocus();
+            }
+        });
 
         final String hotkeyCombinations[] = TiddleProperties.getInstance().getHotkeysShow();
         for (String hotkeyCombination : hotkeyCombinations) {
