@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.scene.control.Control;
 import org.apache.log4j.Logger;
 import tiddle.TiddleProperties;
-import tiddle.search.WikiFile;
 
 import javax.swing.*;
 
