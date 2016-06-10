@@ -3,6 +3,7 @@ package tiddle.javafx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -62,6 +63,9 @@ public class TiddlePresenter implements Initializable {
     private HTMLEditor htmlResultDetails;
     @FXML
     private Pane contentPane;
+
+    private static double xOffset = 0;
+    private static double yOffset = 0;
 
     @Inject
     private WikiSearchService wikiSearchService;
@@ -170,7 +174,7 @@ public class TiddlePresenter implements Initializable {
 
             listViewResults.setOnKeyPressed((KeyEvent e) -> {
                 if (e.getCode() == KeyCode.RIGHT) {
-                    resultDetailsScrollPane.requestFocus();
+                    htmlResultDetails.requestFocus();
 
                 } else if (e.getCode() == KeyCode.ESCAPE) {
                     escapeKeyPressed();
@@ -218,6 +222,16 @@ public class TiddlePresenter implements Initializable {
                 } else {
                     e.consume();
                 }
+            });
+
+            labelLogo.setOnMousePressed(event -> {
+                xOffset = windowService.getX() - event.getScreenX();
+                yOffset = windowService.getY() - event.getScreenY();
+            });
+
+            labelLogo.setOnMouseDragged(event -> {
+                windowService.setX(event.getScreenX() + xOffset);
+                windowService.setY(event.getScreenY() + yOffset);
             });
 
             webView.setOnDragDropped(Event::consume);

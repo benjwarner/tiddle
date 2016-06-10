@@ -36,4 +36,20 @@ public class WindowService {
         stage.setIconified(false);
         stage.requestFocus();
     }
+
+    public double getX() {
+        return stage.getX();
+    }
+
+    public double getY() {
+        return stage.getY();
+    }
+
+    public void setX(final double x) {
+        stage.setX(x);
+    }
+
+    public void setY(final double y) {
+        stage.setY(y);
+    }
 }

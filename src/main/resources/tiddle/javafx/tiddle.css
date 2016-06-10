@@ -1,24 +1,3 @@
-/** {*/
-    /*-fx-var-background: #1d1d1d;*/
-    /*-fx-var-even-result-row: #333;*/
-/*}*/
-
-/*.list-cell:filled:selected:focused, .list-cell:filled:selected {*/
-    /*-fx-background-color: blue;*/
-    /*-fx-text-fill: white;*/
-/*}*/
-
-/*.text-field#textSearchBox {*/
-    /*-fx-text-fill: white;*/
-/*}*/
-
-/*Label#labelLogo {*/
-    /*-fx-text-fill: white;*/
-    /*-fx-font-size: 20;*/
-    /*-fx-padding: 5 5 0 10;*/
-/*}*/
-
-
 * {
     -fx-var-background: #ececec;
     -fx-var-borders: silver;
@@ -89,8 +68,6 @@ Label#textTitle {
     -fx-border-insets: 0 0 10 0;
     -fx-background-insets: 0 0 10 0;
     -fx-background-color: -fx-var-background;
-    /*-fx-border-radius: 0 0 0 10;*/
-    /*-fx-background-radius: 0 0 0 10;*/
 }
 
 #mainPane {
