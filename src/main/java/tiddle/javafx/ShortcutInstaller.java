@@ -34,7 +34,7 @@ public class ShortcutInstaller {
                 LOG.info("Registering hotkey " + hotkeyCombination + " for window restore.");
                 provider.register(KeyStroke.getKeyStroke(hotkeyCombination), hotKeyListener);
             } catch (Throwable t) {
-                LOG.info("Unable to assign hotkey: " + hotkeyCombination + " " + t.getMessage());
+                LOG.error("Unable to assign hotkey: " + hotkeyCombination + " " + t.getMessage(), t);
             }
         }
     }
