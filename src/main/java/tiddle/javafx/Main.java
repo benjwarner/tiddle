@@ -20,7 +20,7 @@ public class Main extends Application {
         final String wikiFilePaths[] = TiddleProperties.getInstance().getWikiFilePaths();
         WikiSearchService wikiSearchService = WikiSearchService.build(wikiFilePaths);
         Injector.setModelOrService(WikiSearchService.class, wikiSearchService);
-        Injector.setModelOrService(WindowService.class, new WindowService(primaryStage));
+        Injector.setModelOrService(Stage.class, primaryStage);
 
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
@@ -40,5 +40,7 @@ public class Main extends Application {
                 primaryStage.requestFocus();
             }
         });
+
+        ResizeHelper.addResizeListener(primaryStage);
     }
 }

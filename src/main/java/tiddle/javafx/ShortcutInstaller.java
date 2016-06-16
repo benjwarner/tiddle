@@ -4,6 +4,7 @@ import com.tulskiy.keymaster.common.HotKeyListener;
 import com.tulskiy.keymaster.common.Provider;
 import javafx.application.Platform;
 import javafx.scene.control.Control;
+import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import tiddle.TiddleProperties;
 
@@ -17,10 +18,11 @@ import javax.swing.*;
 public class ShortcutInstaller {
     private final static Logger LOG = Logger.getLogger(ShortcutInstaller.class);
 
-    public static void install(final WindowService windowService, final Control componentToFocus) {
+    public static void install(final Stage stage, final Control componentToFocus) {
         Provider provider = Provider.getCurrentProvider(false);
         final HotKeyListener hotKeyListener = hotKey -> Platform.runLater(() -> {
-            windowService.restore();
+            stage.setIconified(false);
+            stage.requestFocus();
             if (componentToFocus != null) {
                 componentToFocus.requestFocus();
             }

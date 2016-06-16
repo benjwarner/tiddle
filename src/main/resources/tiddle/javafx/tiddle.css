@@ -78,6 +78,7 @@ Label#textTitle {
     -fx-border-width: 0;
     -fx-background-color: transparent;
     -fx-padding: 10;
+    -fx-pref-width: 600px;
 }
 
 .text-field#textSearchBox {

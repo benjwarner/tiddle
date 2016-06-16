@@ -1,9 +1,9 @@
 package tiddle.javafx;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -21,6 +21,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import org.apache.lucene.document.Document;
 import tiddle.search.Search;
 import tiddle.search.WikiSearchService;
@@ -71,23 +72,24 @@ public class TiddlePresenter implements Initializable {
     private WikiSearchService wikiSearchService;
 
     @Inject
-    private WindowService windowService;
+    private Stage stage;
 
     private ObservableList<ResultsListItem> listViewItems;
 
-    private boolean contentVisible = false;
     private boolean toolbarHidden = false;
+    private ExpandCollapseHelper expandCollapseHelper;
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
         try {
-            ShortcutInstaller.install(windowService, textSearchBox);
+            ShortcutInstaller.install(stage, textSearchBox);
+            expandCollapseHelper = new ExpandCollapseHelper(stage, textSearchPane, contentPane);
             labelLogo.setText(">");
-
             listViewItems = FXCollections.observableArrayList();
             listViewResults.setItems(listViewItems);
             listViewResults.setCellFactory(listView -> new ResultsListCell(listViewResultsParentPane));
-            setExpandedMode(false);
+            expandCollapseHelper.setExpandedMode(false);
+
             hideToolbar();
             final String pathToHtmlResultStylesheet = getClass().getResource("/tiddle/javafx/result-style.css").toString();
             final String pathToFxStylesheet = getClass().getResource("/tiddle/javafx/tiddle.css").toString();
@@ -100,8 +102,8 @@ public class TiddlePresenter implements Initializable {
                     final Search results = wikiSearchService.search(textSearchBox.getText());
                     if (results.getHits().length > 0) {
                         listViewItems.clear();
-                        if (!contentVisible) {
-                            setExpandedMode(true);
+                        if (!expandCollapseHelper.isContentVisible()) {
+                            expandCollapseHelper.setExpandedMode(true);
                         }
                         for (int i = 0; i < results.getHits().length; ++i) {
                             int docId = results.getHits()[i].doc;
@@ -144,7 +146,8 @@ public class TiddlePresenter implements Initializable {
                         wikiSearchService = wikiSearchService.rebuild();
 
                     } else if (e.getCode() == KeyCode.Q) {
-                        windowService.exit();
+                        Platform.exit();
+                        System.exit(0);
                     }
 
                 } else if (e.isControlDown() && e.isShiftDown()) {
@@ -225,19 +228,19 @@ public class TiddlePresenter implements Initializable {
             });
 
             labelLogo.setOnMousePressed(event -> {
-                xOffset = windowService.getX() - event.getScreenX();
-                yOffset = windowService.getY() - event.getScreenY();
+                xOffset = stage.getX() - event.getScreenX();
+                yOffset = stage.getY() - event.getScreenY();
             });
 
             labelLogo.setOnMouseDragged(event -> {
-                windowService.setX(event.getScreenX() + xOffset);
-                windowService.setY(event.getScreenY() + yOffset);
+                stage.setX(event.getScreenX() + xOffset);
+                stage.setY(event.getScreenY() + yOffset);
             });
 
             webView.setOnDragDropped(Event::consume);
-
-
             whiteSpaceCover.toFront();
+
+
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -284,12 +287,12 @@ public class TiddlePresenter implements Initializable {
     }
 
     private void escapeKeyPressed() {
-        if (contentVisible) {
+        if (expandCollapseHelper.isContentVisible()) {
             clearAndReset();
             textSearchBox.clear();
             textSearchBox.requestFocus();
         } else {
-            windowService.hide();
+            stage.setIconified(true);
         }
     }
 
@@ -297,23 +300,6 @@ public class TiddlePresenter implements Initializable {
     private void clearAndReset() {
         listViewItems.clear();
         htmlResultDetails.setHtmlText("");
-        setExpandedMode(false);
-    }
-
-    private void setExpandedMode(final boolean visible) {
-        if (visible) {
-            windowService.setWidth(600);
-            windowService.setHeight(500);
-            textSearchPane.getStyleClass().add("expandedMode");
-
-        } else {
-            windowService.setWidth(600);
-            windowService.setHeight(80);
-            textSearchPane.getStyleClass().removeAll("expandedMode");
-
-        }
-        contentPane.setVisible(visible);
-        contentVisible = visible;
-
+        expandCollapseHelper.setExpandedMode(false);
     }
 }
