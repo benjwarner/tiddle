@@ -2,7 +2,6 @@ package tiddle.javafx;
 
 import javafx.css.Styleable;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 
@@ -16,6 +15,7 @@ public class ExpandCollapseHelper {
     private final Pane contentPane;
     private Styleable textSearchPane;
     private boolean contentVisible = false;
+    private boolean sceneHeightListenerInitialized = false;
     private double expandedHeight = 500;
     private double collapsedHeight = 80;
 
@@ -31,6 +31,9 @@ public class ExpandCollapseHelper {
 
     protected void setExpandedMode(final boolean visible) {
         if (visible) {
+            if(!sceneHeightListenerInitialized){
+                initSceneHeightListener();
+            }
             stage.setHeight(expandedHeight);
             textSearchPane.getStyleClass().add("expandedMode");
 
@@ -41,5 +44,14 @@ public class ExpandCollapseHelper {
         }
         contentPane.setVisible(visible);
         contentVisible = visible;
+    }
+
+    private void initSceneHeightListener() {
+        stage.getScene().heightProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue.doubleValue() > collapsedHeight){
+                expandedHeight = newValue.doubleValue();
+            }
+        });
+        sceneHeightListenerInitialized = true;
     }
 }
