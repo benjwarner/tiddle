@@ -20,7 +20,7 @@ public class WikiFileLoaderTest {
         assertTrue(actualWikiFiles.size() == 1);
 
         final String expectedFileContent = XmlUtils.getClasspathFileAsString(filePath);
-        WikiFile expectedWikiFile = new WikiFile(filePath, expectedFileContent);
+        WikiFile expectedWikiFile = new WikiClassicFile(filePath, expectedFileContent);
         WikiFiles expectedWikiFiles = WikiFiles.forSingleWikiFile(expectedWikiFile);
         assertEquals(expectedWikiFiles, actualWikiFiles);
     }
@@ -32,7 +32,7 @@ public class WikiFileLoaderTest {
         assertTrue(actualWikiFiles.size() == 1);
 
         final String expectedFileContent = XmlUtils.getFileAsString(new File(filePath));
-        WikiFile expectedWikiFile = new WikiFile(new File(filePath).getAbsolutePath(), expectedFileContent);
+        WikiFile expectedWikiFile = new WikiClassicFile(new File(filePath).getAbsolutePath(), expectedFileContent);
         WikiFiles expectedWikiFiles = WikiFiles.forSingleWikiFile(expectedWikiFile);
         assertEquals(expectedWikiFiles, actualWikiFiles);
     }
@@ -49,8 +49,8 @@ public class WikiFileLoaderTest {
         final String expectedFileContent1 = XmlUtils.getFileAsString(new File(filePath1));
         final String expectedFileContent2 = XmlUtils.getFileAsString(new File(filePath2));
 
-        final WikiFile expectedWikiFile1 = new WikiFile(new File(filePath1).getAbsolutePath(), expectedFileContent1);
-        final WikiFile expectedWikiFile2 = new WikiFile(new File(filePath2).getAbsolutePath(), expectedFileContent2);
+        final WikiFile expectedWikiFile1 = new WikiClassicFile(new File(filePath1).getAbsolutePath(), expectedFileContent1);
+        final WikiFile expectedWikiFile2 = new WikiClassicFile(new File(filePath2).getAbsolutePath(), expectedFileContent2);
         final List<WikiFile> expectedWikiFilesList = new ArrayList<>();
         expectedWikiFilesList.add(expectedWikiFile1);
         expectedWikiFilesList.add(expectedWikiFile2);
@@ -73,9 +73,9 @@ public class WikiFileLoaderTest {
         final String expectedFileContent2 = XmlUtils.getFileAsString(new File(filePath2));
         final String expectedFileContent3 = XmlUtils.getFileAsString(new File(filePath3));
 
-        final WikiFile expectedWikiFile1 = new WikiFile(new File(filePath1).getAbsolutePath(), expectedFileContent1);
-        final WikiFile expectedWikiFile2 = new WikiFile(new File(filePath2).getAbsolutePath(), expectedFileContent2);
-        final WikiFile expectedWikiFile3 = new WikiFile(new File(filePath3).getAbsolutePath(), expectedFileContent3);
+        final WikiFile expectedWikiFile1 = new WikiClassicFile(new File(filePath1).getAbsolutePath(), expectedFileContent1);
+        final WikiFile expectedWikiFile2 = new WikiClassicFile(new File(filePath2).getAbsolutePath(), expectedFileContent2);
+        final WikiFile expectedWikiFile3 = new WikiClassicFile(new File(filePath3).getAbsolutePath(), expectedFileContent3);
         final List<WikiFile> expectedWikiFilesList = new ArrayList<>();
         expectedWikiFilesList.add(expectedWikiFile3);
         expectedWikiFilesList.add(expectedWikiFile1);

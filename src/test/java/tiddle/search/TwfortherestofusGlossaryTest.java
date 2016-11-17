@@ -56,7 +56,7 @@ public class TwfortherestofusGlossaryTest {
                         "<tr class=\"oddRow\"><td style=\"background-color: #dddddd;\"><strong>Tiddler</strong></td><td align='left'>A 'window' containing text or code in TiddlyWiki. Tiddlers are like 3x5 note cards to which the user adds content and links with other tiddlers using tags and hyperlinks. For more on tiddlers, see <a href=\"#Anatomy of a Tiddler\">this tiddler</a>.</td></tr>\n" +
                         "<tr class=\"evenRow\"><td style=\"background-color: #dddddd;\"><strong>WikiWord</strong></td><td>See <a href=\"#WikiWord\">this tiddler</a></td></tr>\n\n</tbody></table>";
 
-        assertEquals(html(expectedOutput), WikiToHtml.convertToHTML(input));
+        assertEquals(html(expectedOutput), (new WikiClassicToHtmlConverter()).convertToHTML(input));
     }
 
     private static String html(String string) {

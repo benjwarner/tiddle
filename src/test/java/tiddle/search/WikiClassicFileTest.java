@@ -8,7 +8,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 
-public class WikiFileTest {
+public class WikiClassicFileTest {
     final static String wikiStoreAreaStartTags = "<div id=\"storeArea\">\n";
     final static String wikiStoreAreaContent = "<div title=\"SiteTitle\" modifier=\"Ben\" created=\"200908260028\" changecount=\"1\">\n<pre>Ben's Wiki</pre>\n</div>\n<div title=\"MainMenu\" modifier=\"Ben\" created=\"200908250409\" modified=\"200908262058\" tags=\"Unix Less\" changecount=\"2\"><pre>[[GettingStarted]]\n[[Unix Commands]]\n[[Java]]</pre>\n</div>";
     final static String wikiStoreAreaEndTags = "\n</div>\n<!--POST-STOREAREA-->";
@@ -17,13 +17,13 @@ public class WikiFileTest {
 
     @Test
     public void testExtractStoreArea() {
-        WikiFile wikiFile = new WikiFile("c:\\fake\\wiki\\path\\mywiki.html", wikiComplete);
+        WikiClassicFile wikiFile = new WikiClassicFile("c:\\fake\\wiki\\path\\mywiki.html", wikiComplete);
         assertEquals(wikiStoreAreaContent.trim(), wikiFile.extractStoreArea());
     }
 
     @Test
     public void testGetDocuments() {
-        WikiFile wikiFile = new WikiFile("c:\\fake\\wiki\\path\\mywiki.html", wikiComplete);
+        WikiFile wikiFile = new WikiClassicFile("c:\\fake\\wiki\\path\\mywiki.html", wikiComplete);
         List<Document> docs = wikiFile.getDocuments();
 
         //<div title=\"SiteTitle\" modifier=\"Ben\" created=\"200908260028\" changecount=\"1\">\n<pre>Ben's Wiki</pre>\n</div>

@@ -11,6 +11,13 @@ import java.util.List;
 
 public class WikiFileLoader {
     private final static Logger LOG = Logger.getLogger(WikiFileLoader.class);
+    private final static List<WikiFileFactory> registeredFileFactories;
+
+    static {
+        registeredFileFactories = new ArrayList<>();
+        registeredFileFactories.add(new WikiClassicFileFactory());
+        registeredFileFactories.add(new WikiModernFileFactory());
+    }
 
 
     public static WikiFiles getWikiFiles(String[] wikiFilePaths) {
@@ -56,7 +63,7 @@ public class WikiFileLoader {
         } else {
             try {
                 final String wikiFileContent = XmlUtils.getClasspathFileAsString(wikiFilePath);
-                wikiFiles.add(new WikiFile(wikiFilePath, wikiFileContent));
+                wikiFiles.add(new WikiClassicFile(wikiFilePath, wikiFileContent));
             } catch (Throwable e) {
                 final String message = "Failed reading wiki file from classpath.  Giving up on this one.";
                 LOG.error(message);
@@ -85,19 +92,18 @@ public class WikiFileLoader {
             String fileContent;
             try {
                 fileContent = XmlUtils.getFileAsString(file);
-                if (!WikiFile.isValidWikiFile(fileContent)) {
-                    LOG.debug("Ignoring file at " + file.getAbsolutePath() + " Tiddle doesn't think" +
-                            " that this file is a TiddlyWiki file. The Tiddle wiki parser requires " +
-                            " the following condition: '" + WikiFile.COULD_NOT_FIND_STORE_AREA_MESSAGE +
-                            "' -- If you think that this is a valid TiddlyWiki file, please ensure " +
-                            "that these conditions are met.  If you think they are met, please contact " +
-                            "Tiddle support");
-                } else if (isSubversionBaseFile(file)) {
+
+                if (isSubversionBaseFile(file)) {
                     LOG.debug("Ignoring file at " + file.getAbsolutePath() + " Tiddle thinks that this" +
                             " file is a valid TiddlyWiki files, however it has been " +
                             "detected that this is a subversion system file.");
                 } else {
-                    wikiFiles.add(new WikiFile(file.getAbsolutePath(), fileContent));
+                    final WikiFile wikiFile = getWikiFile(file.getAbsolutePath(), fileContent);
+                    if (wikiFile == null) {
+                        LOG.debug("Ignoring file at " + file.getAbsolutePath() + " Tiddle doesn't think that this file is a TiddlyWiki file.");
+                    } else {
+                        wikiFiles.add(new WikiClassicFile(file.getAbsolutePath(), fileContent));
+                    }
                 }
             } catch (IOException e) {
                 LOG.warn("Could not read contents of wikiFile at:" + file.getAbsolutePath());
@@ -105,6 +111,15 @@ public class WikiFileLoader {
             }
         }
         return wikiFiles;
+    }
+
+    private static WikiFile getWikiFile(final String path, final String content) {
+        for(final WikiFileFactory wikiFileFactory: registeredFileFactories){
+            if(wikiFileFactory.isValidWikiFile(content)){
+                return wikiFileFactory.createWikiFile(path, content);
+            }
+        }
+        return null;
     }
 
     private static boolean isSubversionBaseFile(File file) {

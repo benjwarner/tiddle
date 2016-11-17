@@ -3,7 +3,7 @@ package tiddle.search;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WikiToPlainText {
+public class WikiClassicToPlainTextConverter implements WikiToPlainTextConverter {
     private static List<Replacement> replacements;
 
     static {
@@ -24,7 +24,8 @@ public class WikiToPlainText {
     }
 
 
-    public static String convertToPlainText(final String wikiText) {
+    @Override
+    public String convertToPlainText(final String wikiText) {
         String returnText = wikiText;
         for (Replacement r : replacements) {
             returnText = r.replace(returnText);

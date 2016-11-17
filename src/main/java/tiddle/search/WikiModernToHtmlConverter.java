@@ -5,8 +5,8 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WikiToHtml {
-    private final static Logger LOG = Logger.getLogger(WikiToHtml.class);
+public class WikiModernToHtmlConverter implements WikiToHtmlConverter {
+    private final static Logger LOG = Logger.getLogger(WikiModernToHtmlConverter.class);
     private static List<Replacement> replacements;
 
     static {
@@ -71,11 +71,11 @@ public class WikiToHtml {
         replacements.add(new Replacement("(<th>.*?</th>\\s*)\\|[hf]", "<tr>$1</tr>"));
         /*
          * This one is kind of weird.  Find: pipe, followed by any character except pipe or
-		 * carriage return, with a negative lookahead of ]] at each character.  This is so
-		 * that links do not get turned into table cells.  It is still not perfect, as this does
-		 * not allow links inside of table cells.  But will do until I can think
-		 * of something better.
-		 */
+         * carriage return, with a negative lookahead of ]] at each character.  This is so
+         * that links do not get turned into table cells.  It is still not perfect, as this does
+         * not allow links inside of table cells.  But will do until I can think
+         * of something better.
+         */
         replacements.add(new Replacement("\\|(((?!\\]\\])[^|\\n])*)(?=\\|)", "<td>$1</td>"));
         replacements.add(new Replacement("(<td[^>]*>.*?)\\|", "<tr>$1</tr>"));
         replacements.add(new Replacement("((?:<tr>.*?</tr>\\s*\\n)+)", "<table class=\"twtable\"><tbody>$1</tbody></table>\n"));
@@ -95,12 +95,11 @@ public class WikiToHtml {
     }
 
 
-    public static String convertToHTML(final String wikiText) {
+    @Override
+    public String convertToHTML(final String wikiText) {
         String returnText = wikiText;
         for (Replacement r : replacements) {
             returnText = r.replace(returnText);
-            //LOG.debug("Executing: " + r.toString());
-            //LOG.debug(returnText);
         }
         return returnText;
     }

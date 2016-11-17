@@ -13,7 +13,7 @@ public class WikiSearchServiceTest {
     public void testSearch() throws Exception {
         final String filePath = "/wikis/tiddle-help_20091015.html";
         final String wikiFileContent = XmlUtils.getClasspathFileAsString(filePath);
-        final WikiFile wikiFile = new WikiFile(filePath, wikiFileContent);
+        final WikiFile wikiFile = new WikiClassicFile(filePath, wikiFileContent);
 
         WikiSearchService searchService = WikiSearchService.forDocuments(wikiFile.getDocuments());
         final Search results = searchService.search("Unix");
